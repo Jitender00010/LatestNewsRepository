@@ -2,54 +2,78 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:padding="10dp"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/iv_details_activity"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scaleType="fitXY"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_height="0dp"
+        android:layout_margin="5dp"
+        app:cardCornerRadius="3dp"
         app:layout_constraintBottom_toTopOf="@+id/tv_headline_newsDetails"
-        />
+        app:layout_constraintLeft_toLeftOf="@+id/tv_headline_newsDetails"
+        app:layout_constraintRight_toRightOf="@+id/tv_headline_newsDetails"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/iv_details_activity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
 
     <TextView
+        android:layout_marginLeft="5dp"
+        android:id="@+id/tv_headline_newsDetails"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="asdfafafasfdafdsafdaf"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="10dp"
+        android:textSize="16sp"
+        android:text=""
         app:layout_constraintBottom_toBottomOf="parent"
-        android:id="@+id/tv_headline_newsDetails"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
-     <TextView
+    <TextView
+        android:layout_marginLeft="5dp"
+        android:id="@+id/tv_discription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-         android:text="asdfsafasfasfasfasfa"
-         android:layout_marginTop="10dp"
-         app:layout_constraintTop_toBottomOf="@+id/tv_headline_newsDetails"
-        android:id="@+id/tv_discription"/>
+        android:layout_marginTop="10dp"
+        android:text=""
+        app:layout_constraintTop_toBottomOf="@+id/tv_headline_newsDetails" />
 
     <TextView
+        android:layout_marginLeft="5dp"
+        android:id="@+id/tv_source_details"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/tv_source"
-        android:text="adsfas"
+        android:layout_marginTop="10dp"
+        android:text=""
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginTop="10dp"
-        app:layout_constraintTop_toBottomOf="@+id/tv_discription"/>
+        app:layout_constraintTop_toBottomOf="@+id/tv_discription" />
 
     <TextView
-        android:id="@+id/tv_publish_date"
+        android:id="@+id/tv_publish_date_details"
         android:layout_width="wrap_content"
-        android:text="asfasfa"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
-        app:layout_constraintLeft_toRightOf="@+id/tv_source"
-        app:layout_constraintStart_toEndOf="@+id/tv_source"
+        android:layout_marginTop="10dp"
+        android:text=""
+        app:layout_constraintLeft_toRightOf="@+id/tv_source_details"
+        app:layout_constraintStart_toEndOf="@+id/tv_source_details"
         app:layout_constraintTop_toBottomOf="@+id/tv_discription" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

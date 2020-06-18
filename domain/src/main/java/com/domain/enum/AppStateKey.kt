@@ -1,5 +1,6 @@
 package com.domain.enum
 
 enum class AppStateKey {
-    NEWS_DATA
+    NEWS_DATA,
+    LAST_TIME
 }

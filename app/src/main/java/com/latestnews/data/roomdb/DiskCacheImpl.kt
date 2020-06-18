@@ -20,11 +20,12 @@ class DiskCacheImpl @Inject constructor(
 
     private val stringDao = stringDB.stringDao()
 
-    override fun get(key: String): String = String().let {
+    override fun get(key: String): String? = String().let {
         try {
-            val stringEntity = stringDao.getValue(key)
+            var stringEntity : String? = stringDao.getValue(key)?.value
 
-            stringEntity!!.value.toString()
+            stringEntity?.let {  stringEntity }?: null
+
         } catch (e: Exception) {
             e.message.toString()
         }

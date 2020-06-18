@@ -5,9 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.domain.entity.NewsResponseVo
 import kotlinx.android.synthetic.main.activity_news_detail.*
-import kotlinx.android.synthetic.main.adapter_news_list.*
-import kotlinx.android.synthetic.main.adapter_news_list.view.*
-
 
 class NewsDetailsActivity : AppCompatActivity() {
 
@@ -25,8 +22,9 @@ class NewsDetailsActivity : AppCompatActivity() {
                 .into(iv_details_activity)
 
             tv_discription.text = it.description
-
             tv_headline_newsDetails.text = it.title
+            tv_publish_date_details.text = it.publishedAt
+            tv_source_details.text = it.source.name
         }
 
     }
