@@ -1,8 +1,9 @@
-package com.callmanagerfinal.data.roomdb
+package com.latestnews.data.roomdb
 
 import android.util.Log
-import com.callmanagerfinal.data.roomdb.entity.StringEntity
+import com.callmanagerfinal.data.roomdb.StringDB
 import com.google.gson.Gson
+import com.latestnews.data.roomdb.entity.StringEntity
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -13,8 +14,8 @@ import javax.inject.Singleton
  */
 @Singleton
 class DiskCacheImpl @Inject constructor(
-        private val stringDB: StringDB,
-        private val gson: Gson
+    private val stringDB: StringDB,
+    private val gson: Gson
 ) : DiskCache {
 
     private val stringDao = stringDB.stringDao()

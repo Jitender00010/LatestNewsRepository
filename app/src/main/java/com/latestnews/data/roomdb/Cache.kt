@@ -1,4 +1,4 @@
-package com.callmanagerfinal.data.roomdb
+package com.latestnews.data.roomdb
 
 interface Cache {
 

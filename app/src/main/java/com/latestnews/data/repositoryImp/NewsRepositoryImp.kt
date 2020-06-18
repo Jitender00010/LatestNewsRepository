@@ -1,17 +1,14 @@
-package com.callmanagerfinal.data.repositoryImp
+package com.latestnews.data.repositoryImp
 
-import com.callmanagerfinal.api.api.UserAPI
-import com.callmanagerfinal.base.BaseMapFunction
-import com.e.domain.entity.OtpRequestModel
-import com.e.domain.entity.OtpRequestResponseModel
-import com.e.domain.repository.UserRepository
+import com.domain.entity.NewsResponseVO
+import com.domain.repository.NewsRepository
+import com.latestnews.api.api.NewsAPI
+import com.latestnews.base.BaseMapFunction
 import io.reactivex.Observable
 import javax.inject.Inject
 
-class UserRepositoryImp @Inject constructor(private val userAPI: UserAPI) : UserRepository{
-    override fun sendOtp(otpRequestModel: OtpRequestModel): Observable<OtpRequestResponseModel> {
-        return userAPI.sendOtp("application/json",otpRequestModel.languageName,otpRequestModel.appName,otpRequestModel.deviceId,otpRequestModel.deviceType
-            ,otpRequestModel.channel,otpRequestModel.appVersion.toString(),otpRequestModel).map (object : BaseMapFunction<OtpRequestResponseModel, OtpRequestResponseModel>(OtpRequestResponseModel()){})
+class NewsRepositoryImp @Inject constructor(private val newsAPI: NewsAPI) : NewsRepository{
+    override fun getNewsList(): Observable<NewsResponseVO> {
+        return newsAPI.getNews("us","bab70fdc508a46aeb197ced873ade2b5").map (object : BaseMapFunction<NewsResponseVO, NewsResponseVO>(NewsResponseVO(null,null,null,null,null,null,null,null)){})
     }
-
 }

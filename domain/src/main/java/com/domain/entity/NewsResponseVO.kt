@@ -2,23 +2,23 @@ package com.domain.entity
 
 import com.google.gson.annotations.SerializedName
 
-data class NewsResponse (
+data class NewsResponseVO (
     @SerializedName("source")
-    val source: source,
+    val source: source?,
     @SerializedName("author")
     val author : String?,
-@SerializedName("title")
+    @SerializedName("title")
     val title : String?,
-@SerializedName("description")
+    @SerializedName("description")
     val description : String?,
-@SerializedName("url")
+    @SerializedName("url")
     val url : String?,
-@SerializedName("urlToImage")
+    @SerializedName("urlToImage")
     val urlToImage : String?,
-@SerializedName("publishedAt")
+    @SerializedName("publishedAt")
     val publishedAt : String?,
-@SerializedName("publishedAt")
-    val publishedAt : String?
+    @SerializedName("content")
+    val content : String?
 )
 
 

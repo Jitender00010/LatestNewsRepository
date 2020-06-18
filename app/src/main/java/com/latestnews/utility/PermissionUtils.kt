@@ -1,13 +1,9 @@
-package com.callmanagerfinal.utility
+package com.latestnews.utility
 import android.Manifest
 import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
-import com.callmanagerfinal.base.BaseActivity
+import com.latestnews.base.BaseActivity
 
-
-/**
- * Created by Nitin Jain on 12/15/18.
- */
 class PermissionUtils(private val baseActivity: BaseActivity) {
 
     companion object {

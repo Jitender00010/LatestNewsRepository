@@ -1,4 +1,4 @@
-package com.callmanagerfinal.base
+package com.latestnews.base
 
 import android.app.ProgressDialog
 import android.content.pm.PackageManager
@@ -6,11 +6,10 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
-import com.callmanagerfinal.utility.EmptyViewModel
-import com.callmanagerfinal.utility.Failure
-import com.callmanagerfinal.utility.PermissionUtils
+import com.latestnews.utility.Failure
+import com.latestnews.utility.PermissionUtils
+import com.latestnews.utility.ViewStatus
 
-import com.callmanagerfinal.utility.ViewStatus
 import dagger.android.support.DaggerAppCompatActivity
 
 open abstract class BaseActivity : DaggerAppCompatActivity() {

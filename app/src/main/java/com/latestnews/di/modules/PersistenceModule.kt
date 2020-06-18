@@ -1,13 +1,13 @@
-package com.callmanagerfinal.di.modules
+package com.latestnews.di.modules
 
 
 import android.content.Context
 import androidx.room.Room
-import com.callmanagerfinal.data.roomdb.DiskCache
-import com.callmanagerfinal.data.roomdb.DiskCacheImpl
 import com.callmanagerfinal.data.roomdb.StringDB
-import com.callmanagerfinal.di.qualifier.Application
 import com.google.gson.Gson
+import com.latestnews.data.roomdb.DiskCache
+import com.latestnews.data.roomdb.DiskCacheImpl
+import com.latestnews.di.qualifier.Application
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

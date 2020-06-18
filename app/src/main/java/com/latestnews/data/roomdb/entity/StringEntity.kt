@@ -1,4 +1,4 @@
-package com.callmanagerfinal.data.roomdb.entity
+package com.latestnews.data.roomdb.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

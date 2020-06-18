@@ -1,16 +1,17 @@
-package com.callmanagerfinal.api
-import com.callmanagerfinal.api.ApiConstant.API_SUCCESS
+package com.latestnews.api
+
+import com.latestnews.api.ApiConstant.API_SUCCESS
 
 open class BaseResponse<T>{
-    fun isSuccess(): Boolean = when(code){
+    fun isSuccess(): Boolean = when(status){
         API_SUCCESS -> true
         else -> false
     }
 
-    var code: Int = -1
-    var status : String? = null
+    var status: String = "error"
+    var totalResults : Int = -1
     var message : String? = null
 
 
-    var data : T? = null
+    var articles : T? = null
 }

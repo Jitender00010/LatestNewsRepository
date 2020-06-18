@@ -1,5 +1,4 @@
-
-package com.callmanagerfinal.di.modules.ViewModel
+package com.latestnews.di.modules.viewModel
 
 import androidx.lifecycle.ViewModel
 import dagger.MapKey

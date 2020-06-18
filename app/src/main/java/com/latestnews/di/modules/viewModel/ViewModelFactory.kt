@@ -1,11 +1,11 @@
-package com.callmanagerfinal.di.modules.ViewModel
-
+package com.latestnews.di.modules.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import javax.inject.Inject
 import javax.inject.Provider
 import javax.inject.Singleton
+
 @Singleton
 @Suppress("UNCHECKED_CAST")
 class ViewModelFactory

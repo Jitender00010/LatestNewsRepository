@@ -1,9 +1,7 @@
-package com.callmanagerfinal.di.modules
+package com.latestnews.di.modules
 
-import com.callmanagerfinal.data.repositoryImp.AppSessionRepositoryImp
-import com.callmanagerfinal.data.repositoryImp.UserRepositoryImp
-import com.e.domain.repository.AppSessionRepository
-import com.e.domain.repository.UserRepository
+import com.domain.repository.NewsRepository
+import com.latestnews.data.repositoryImp.NewsRepositoryImp
 import dagger.Binds
 import dagger.Module
 
@@ -11,9 +9,6 @@ import dagger.Module
 abstract class RepoModule {
 
     @Binds
-    internal abstract fun bindAppSessionRepo(repository: AppSessionRepositoryImp): AppSessionRepository
-
-    @Binds
-    internal abstract fun bindUserRepository(repository: UserRepositoryImp): UserRepository
+    internal abstract fun bindNewsRepo(repository: NewsRepositoryImp): NewsRepository
 
 }

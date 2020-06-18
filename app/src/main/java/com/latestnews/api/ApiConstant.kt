@@ -1,9 +1,10 @@
-package com.callmanagerfinal.api
+package com.latestnews.api
 
 object ApiConstant {
 
-    const val API_SUCCESS       = 2000
+    const val API_SUCCESS       = "ok"
 
-    const val METHOD_SEND_OTP  = "sendOtp"
+    //val BASE_URL : String = "https://newsapi.org/v2/top-headlines?country=us&apiKey=API_KEY"
+    val BASE_URL : String = "https://simplifiedcoding.net/demos/marvels"
 
 }

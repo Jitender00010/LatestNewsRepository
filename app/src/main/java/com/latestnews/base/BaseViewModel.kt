@@ -1,9 +1,9 @@
-package com.callmanagerfinal.base
+package com.latestnews.base
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.callmanagerfinal.utility.Failure
-import com.callmanagerfinal.utility.ViewStatus
+import com.latestnews.utility.Failure
+import com.latestnews.utility.ViewStatus
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 

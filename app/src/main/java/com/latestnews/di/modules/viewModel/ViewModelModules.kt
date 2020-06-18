@@ -1,9 +1,8 @@
-package com.callmanagerfinal.di.modules.ViewModel
+package com.latestnews.di.modules.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.callmanagerfinal.view.login.LoginViewModel
-import com.callmanagerfinal.view.splash.SplashViewModel
+import com.latestnews.view.NewsViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -17,12 +16,7 @@ abstract class ViewModelModules {
 
     @Binds
     @IntoMap
-    @ViewModelKey(SplashViewModel::class)
-    abstract fun bindsSplashViewModel(viewModel: SplashViewModel): ViewModel
-
-    @Binds
-    @IntoMap
-    @ViewModelKey(LoginViewModel::class)
-    abstract fun bindsLoginViewModel(viewModel: LoginViewModel): ViewModel
+    @ViewModelKey(NewsViewModel::class)
+    abstract fun bindNewsViewModel(viewModel: NewsViewModel): ViewModel
 
 }

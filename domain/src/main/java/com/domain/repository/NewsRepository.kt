@@ -1,7 +1,8 @@
 package com.domain.repository
+import com.domain.entity.NewsResponseVO
 import io.reactivex.Observable
 
-interface UserRepository {
+interface NewsRepository {
 
-    fun sendOtp(otpRequestModel: OtpRequestModel) : Observable<OtpRequestResponseModel>
+    fun getNewsList() : Observable<NewsResponseVO>
 }

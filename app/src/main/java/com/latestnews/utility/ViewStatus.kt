@@ -1,4 +1,4 @@
-package com.callmanagerfinal.utility
+package com.latestnews.utility
 
 sealed class ViewStatus {
 
@@ -11,6 +11,5 @@ sealed class ViewStatus {
 
         val LOADING = ViewStatus.LOADING("loading......")
         val SUCCESS = ViewStatus.SUCCESS("SUCCESS")
-
     }
 }

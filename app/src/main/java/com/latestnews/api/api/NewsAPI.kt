@@ -1,25 +1,13 @@
-package com.callmanagerfinal.api.api
+package com.latestnews.api.api
 
-import com.callmanagerfinal.api.ApiConstant
-import com.callmanagerfinal.api.BaseArguments
-import com.callmanagerfinal.api.BaseResponse
-import com.e.domain.entity.OtpRequestModel
-import com.e.domain.entity.OtpRequestResponseModel
-import retrofit2.http.Body
-import retrofit2.http.POST
+import com.domain.entity.NewsResponseVO
 import io.reactivex.Observable
-import retrofit2.http.Header
+import com.latestnews.api.BaseResponse
+import retrofit2.http.GET
+import retrofit2.http.Query
 
-interface UserAPI{
+interface NewsAPI{
 
-    @POST(ApiConstant.METHOD_SEND_OTP)
-    fun sendOtp(@Header(BaseArguments.ARG_CONTENT_TYPE) contentType :String? ,
-                @Header(BaseArguments.ARG_LANGUAGE_NAME) language :String? ,
-                @Header(BaseArguments.ARG_APP_NAME) appName :String? ,
-                @Header(BaseArguments.ARG_DEVICE_ID) deviceId :String? ,
-                @Header(BaseArguments.ARG_DEVICE_TYPE) deviceType :String? ,
-                @Header(BaseArguments.ARG_CHANNEL) channel :String? ,
-                @Header(BaseArguments.ARG_APP_VERSION) appVersion :String? ,
-
-                @Body body : OtpRequestModel): Observable<BaseResponse<OtpRequestResponseModel>>
+    @GET("top-headlines")
+    fun getNews(@Query("country") country : String,@Query("apiKey") key:String): Observable<BaseResponse<NewsResponseVO>>
 }

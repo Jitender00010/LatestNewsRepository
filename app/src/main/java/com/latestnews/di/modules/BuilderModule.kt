@@ -1,9 +1,7 @@
-package com.callmanagerfinal.di.modules
+package com.latestnews.di.modules
 
-
-import com.callmanagerfinal.MainActivity
-import com.callmanagerfinal.view.login.LoginActivity
-import com.callmanagerfinal.view.splash.SplashActivity
+import com.latestnews.MainActivity
+import com.latestnews.view.LatestNewsListActivity
 import dagger.Module
 import dagger.android.AndroidInjectionModule
 import dagger.android.ContributesAndroidInjector
@@ -15,8 +13,5 @@ abstract class BuilderModule {
     abstract fun contributeMainActivity(): MainActivity
 
     @ContributesAndroidInjector()
-    abstract fun contributeSplashActivity(): SplashActivity
-
-    @ContributesAndroidInjector()
-    abstract fun contributeLoginActivity(): LoginActivity
+    abstract fun contributeLatestNewsListActivity(): LatestNewsListActivity
 }

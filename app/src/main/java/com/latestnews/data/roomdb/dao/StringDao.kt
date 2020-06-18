@@ -1,7 +1,7 @@
-package com.callmanagerfinal.data.roomdb.dao
+package com.latestnews.data.roomdb.dao
 
 import androidx.room.*
-import com.callmanagerfinal.data.roomdb.entity.StringEntity
+import com.latestnews.data.roomdb.entity.StringEntity
 
 /**
  * @author Jitender

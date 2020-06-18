@@ -1,6 +1,8 @@
-package com.callmanagerfinal.base
+package com.latestnews.base
 
-import com.callmanagerfinal.utility.Failure
+import com.google.gson.Gson
+import com.latestnews.api.BaseResponse
+import com.latestnews.utility.Failure
 import io.reactivex.Observer
 import retrofit2.HttpException
 import java.io.IOException
@@ -15,15 +17,16 @@ abstract class BaseSubscriber<T> : Observer<T> {
             is HttpException -> {
                 if (e.code() == 401) {
                     try {
-                        // val  gson = Gson()
-                       // val response = gson.fromJson(e.response()!!.errorBody()?.string(),BaseResponse::class.java)
-                        onFailure(Failure.TokenFailure("Session expired."))
+                         val  gson = Gson()
+                        val response = gson.fromJson(e.response()!!.errorBody()?.string(),
+                            BaseResponse::class.java)
+                        onFailure(Failure.TokenFailure(response.message!!))
                     } catch (e: Exception) {
-                        onFailure(Failure.TokenFailure("Session expired."))
+                        onFailure(Failure.TokenFailure("Session expiredddddd."))
                     }
                 }
             }
-            else -> onFailure(Failure.ServerError("Something went wrong Please try again later"))
+            else -> onFailure(Failure.ServerError("Something went wrong Please try again later",""))
         }
     }
 

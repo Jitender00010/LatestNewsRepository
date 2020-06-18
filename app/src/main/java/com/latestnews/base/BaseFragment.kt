@@ -1,11 +1,11 @@
-package com.callmanagerfinal.base
+package com.latestnews.base
 
 import android.app.ProgressDialog
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.callmanagerfinal.utility.Failure
-import com.callmanagerfinal.utility.ViewStatus
+import com.latestnews.utility.Failure
+import com.latestnews.utility.ViewStatus
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
