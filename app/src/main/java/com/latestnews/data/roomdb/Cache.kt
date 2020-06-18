@@ -2,7 +2,7 @@ package com.latestnews.data.roomdb
 
 interface Cache {
 
-    fun get(key: String): Any
+    fun get(key: String): String
 
     fun <V : Any> put(key: String, value: V): Boolean
 

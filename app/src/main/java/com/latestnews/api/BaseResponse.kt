@@ -8,7 +8,7 @@ open class BaseResponse<T>{
         else -> false
     }
 
-    var status: String = "error"
+    var status: String = ""
     var totalResults : Int = -1
     var message : String? = null
 

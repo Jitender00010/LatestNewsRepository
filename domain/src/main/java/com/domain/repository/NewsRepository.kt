@@ -1,8 +1,8 @@
 package com.domain.repository
-import com.domain.entity.NewsResponseVO
+import com.domain.entity.ListNewsResponse
 import io.reactivex.Observable
 
 interface NewsRepository {
 
-    fun getNewsList() : Observable<NewsResponseVO>
+    fun getNewsList(): Observable<ListNewsResponse>
 }

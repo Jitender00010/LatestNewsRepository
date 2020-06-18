@@ -1,7 +1,7 @@
 package com.latestnews.view
 
 import androidx.lifecycle.MutableLiveData
-import com.domain.entity.NewsResponseVO
+import com.domain.entity.ListNewsResponse
 import com.latestnews.base.BaseSubscriber
 import com.latestnews.base.BaseViewModel
 import com.latestnews.data.useCase.NewsRepositoryUseCase
@@ -15,15 +15,15 @@ import javax.inject.Inject
 class NewsViewModel  @Inject constructor(private val newsRepositoryUseCase: NewsRepositoryUseCase)
     : BaseViewModel() {
 
-    fun getLatestNews() : MutableLiveData<NewsResponseVO> {
+    fun getLatestNews() : MutableLiveData<ListNewsResponse> {
 
-        val newsData = MutableLiveData<NewsResponseVO>()
+        val newsData = MutableLiveData<ListNewsResponse>()
         viewStatus.postValue(ViewStatus.LOADING)
 
         newsRepositoryUseCase.getNewsList()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : BaseSubscriber<NewsResponseVO>() {
+            .subscribe(object : BaseSubscriber<ListNewsResponse>() {
                 override fun onFailure(failure: Failure) {
                     handleError(failure)
                 }
@@ -32,7 +32,7 @@ class NewsViewModel  @Inject constructor(private val newsRepositoryUseCase: News
                     compositeDisposable.add(d)
                 }
 
-                override fun onNext(t: NewsResponseVO) {
+                override fun onNext(t: ListNewsResponse) {
                     viewStatus.postValue(ViewStatus.SUCCESS)
                     newsData.postValue(t)
                 }

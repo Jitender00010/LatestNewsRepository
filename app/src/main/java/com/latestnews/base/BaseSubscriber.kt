@@ -17,12 +17,12 @@ abstract class BaseSubscriber<T> : Observer<T> {
             is HttpException -> {
                 if (e.code() == 401) {
                     try {
-                         val  gson = Gson()
+                        val  gson = Gson()
                         val response = gson.fromJson(e.response()!!.errorBody()?.string(),
                             BaseResponse::class.java)
                         onFailure(Failure.TokenFailure(response.message!!))
                     } catch (e: Exception) {
-                        onFailure(Failure.TokenFailure("Session expiredddddd."))
+                        onFailure(Failure.TokenFailure("Session expire."))
                     }
                 }
             }

@@ -1,5 +1,6 @@
 package com.latestnews.di.modules
 
+import com.latestnews.api.ApiConstant
 import com.latestnews.api.api.NewsAPI
 
 import dagger.Module
@@ -27,7 +28,7 @@ class NetworkModules {
         val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
 
         return Retrofit.Builder()
-            .baseUrl("https://newsapi.org/v2/")
+            .baseUrl(ApiConstant.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .client(client)

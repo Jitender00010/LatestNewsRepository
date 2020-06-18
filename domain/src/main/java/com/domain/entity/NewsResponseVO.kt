@@ -1,30 +1,31 @@
 package com.domain.entity
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class NewsResponseVO (
     @SerializedName("source")
-    val source: source?,
+    val source: source? = null,
     @SerializedName("author")
-    val author : String?,
+    val author : String? = null,
     @SerializedName("title")
-    val title : String?,
+    val title : String? = null,
     @SerializedName("description")
-    val description : String?,
+    val description : String? = null,
     @SerializedName("url")
-    val url : String?,
+    val url : String? = null,
     @SerializedName("urlToImage")
-    val urlToImage : String?,
+    val urlToImage : String? = null,
     @SerializedName("publishedAt")
-    val publishedAt : String?,
+    val publishedAt : String? = null,
     @SerializedName("content")
-    val content : String?
-)
+    val content : String? = null
+) : Serializable
 
 
 data class source(
     @SerializedName("id")
-    val id : String?,
+    val id : String? = null,
     @SerializedName("name")
-    val name : String?
+    val name : String? = null
 )

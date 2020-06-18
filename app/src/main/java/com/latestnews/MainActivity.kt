@@ -1,6 +1,5 @@
 package com.latestnews
 
-import androidx.lifecycle.ViewModelProviders
 import com.latestnews.base.BaseActivity
 import com.latestnews.base.BaseViewModel
 

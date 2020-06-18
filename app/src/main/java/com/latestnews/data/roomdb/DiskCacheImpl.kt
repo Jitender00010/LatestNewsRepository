@@ -24,7 +24,7 @@ class DiskCacheImpl @Inject constructor(
         try {
             val stringEntity = stringDao.getValue(key)
 
-            stringEntity.toString()
+            stringEntity!!.value.toString()
         } catch (e: Exception) {
             e.message.toString()
         }
