@@ -1,6 +1,7 @@
 package com.latestnews.base
 
 import android.app.ProgressDialog
+import android.app.ProgressDialog.show
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.widget.Toast
@@ -11,6 +12,7 @@ import com.latestnews.utility.PermissionUtils
 import com.latestnews.utility.ViewStatus
 
 import dagger.android.support.DaggerAppCompatActivity
+
 
 open abstract class BaseActivity : DaggerAppCompatActivity() {
 
@@ -36,10 +38,7 @@ open abstract class BaseActivity : DaggerAppCompatActivity() {
                                     it.failure.message,
                                     false
                                 )
-                                is Failure.TokenFailure -> showError(it.failure.message, false)
-
-                                else -> {
-                                }
+                                is Failure.TokenFailure -> showErrorDialog(it.failure.message, false)
                             }
                         }
                         is ViewStatus.LOADING -> {
@@ -96,9 +95,18 @@ open abstract class BaseActivity : DaggerAppCompatActivity() {
     }
 
     private fun showError(message: String, isFinish: Boolean) {
-
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show()
     }
+
+
+    private fun showErrorDialog(message: String, isFinish: Boolean) {
+        AlertDialog.Builder(this)
+            .setTitle("Error")
+            .setMessage(message)
+            .setPositiveButton("OK") { dialog, which -> dialog.dismiss() }
+            .show()
+    }
+
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         var allgranted = false

@@ -2,19 +2,19 @@ package com.callmanagerfinal.data.roomdb
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.latestnews.data.roomdb.dao.StringDao
-import com.latestnews.data.roomdb.entity.StringEntity
+import com.latestnews.data.roomdb.dao.NewsDao
+import com.latestnews.data.roomdb.entity.NewsEntity
 
 /**
  * @author Jitender
  */
 @Database(
         entities = [
-            StringEntity::class
+            NewsEntity::class
         ],
-        version = 1
+        version = 2
 )
 abstract class StringDB : RoomDatabase() {
 
-    abstract fun stringDao(): StringDao
+    abstract fun newsDao(): NewsDao
 }

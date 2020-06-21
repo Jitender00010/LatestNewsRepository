@@ -1,14 +1,19 @@
 package com.latestnews.data.roomdb
 
+import com.latestnews.data.roomdb.entity.NewsEntity
+
 interface Cache {
+    fun getAll(): List<NewsEntity>
 
-    fun get(key: String): String?
+    fun countUsers(): Integer
 
-    fun <V : Any> put(key: String, value: V): Boolean
+    fun getCurrentPage(pageNo : Int ): List<NewsEntity>
 
-    fun <V : Any> remove(key: String): Boolean
+    fun insertAll(newsEntity: NewsEntity)
 
-    fun evict():Boolean
+    fun delete(user: NewsEntity)
+
+    fun nukeTable()
 }
 
 interface DiskCache : Cache

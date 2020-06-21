@@ -9,5 +9,7 @@ import retrofit2.http.Query
 interface NewsAPI{
 
     @GET("top-headlines")
-    fun getNews(@Query("country") country : String,@Query("apiKey") key:String): Observable<BaseResponse<List<NewsResponseVo>>>
+    fun getNews(@Query("country") country : String,@Query("pageSize") pageSize : Int,
+                @Query("page") page : Int, @Query("apiKey") key:String)
+            : Observable<BaseResponse<ArrayList<NewsResponseVo>>>
 }

@@ -4,5 +4,5 @@ import io.reactivex.Observable
 
 interface NewsRepository {
 
-    fun getNewsList(): Observable<ListNewsResponse>
+    fun getNewsList(page : Int): Observable<ListNewsResponse>
 }

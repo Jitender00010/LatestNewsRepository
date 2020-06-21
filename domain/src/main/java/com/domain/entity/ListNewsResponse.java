@@ -2,23 +2,24 @@ package com.domain.entity;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class ListNewsResponse extends BaseDisplayData<List<NewsResponseVo>>{
+public class ListNewsResponse extends BaseDisplayData<ArrayList<NewsResponseVo>>{
 
     @SerializedName("articles")
-    private List<NewsResponseVo> articlesList;
+    private ArrayList<NewsResponseVo> articlesList;
 
-    public List<NewsResponseVo> getArticlesList() {
+    public ArrayList<NewsResponseVo> getArticlesList() {
         return articlesList;
     }
 
-    public void setArticlesList(List<NewsResponseVo> articlesList) {
+    public void setArticlesList(ArrayList<NewsResponseVo> articlesList) {
         this.articlesList = articlesList;
     }
 
     @Override
-    public void update(List<NewsResponseVo> newsResponses) {
+    public void update(ArrayList<NewsResponseVo> newsResponses) {
 
         articlesList = newsResponses;
     }

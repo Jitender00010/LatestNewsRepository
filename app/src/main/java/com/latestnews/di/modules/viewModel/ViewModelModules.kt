@@ -2,7 +2,7 @@ package com.latestnews.di.modules.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.latestnews.view.NewsViewModel
+import com.latestnews.view.LatestNews.NewsViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap

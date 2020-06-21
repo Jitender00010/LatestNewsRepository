@@ -1,9 +1,8 @@
 package com.latestnews.data.roomdb
 
-import android.util.Log
 import com.callmanagerfinal.data.roomdb.StringDB
 import com.google.gson.Gson
-import com.latestnews.data.roomdb.entity.StringEntity
+import com.latestnews.data.roomdb.entity.NewsEntity
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -17,53 +16,30 @@ class DiskCacheImpl @Inject constructor(
     private val stringDB: StringDB,
     private val gson: Gson
 ) : DiskCache {
+    private val newsDAO = stringDB.newsDao()
 
-    private val stringDao = stringDB.stringDao()
-
-    override fun get(key: String): String? = String().let {
-        try {
-            var stringEntity : String? = stringDao.getValue(key)?.value
-
-            stringEntity?.let {  stringEntity }?: null
-
-        } catch (e: Exception) {
-            e.message.toString()
-        }
+    override fun getCurrentPage(pageNo : Int ): List<NewsEntity> {
+        return newsDAO.getCurrentPage(pageNo)
     }
 
-    //todo implement like hashmap put. return object instead of json
-    override fun <V : Any> put(key: String, value: V): Boolean {
-        return try {
-            stringDao.putValue(
-                StringEntity(
-                    key,
-                    gson.toJson(value)
-                )
-            )
-            true
-        } catch (e: Exception) {
-            Log.e("Error ", " DiskCacheImp" + e.message.toString())
-            false
-        }
+
+    override fun getAll(): List<NewsEntity> {
+        return newsDAO.getAll()
     }
 
-    override fun <V : Any> remove(key: String): Boolean {
-        return try {
-            stringDao.delete(StringEntity(key,""))
-            true
-        } catch (e: Exception) {
-            Log.e("Error ", " DiskCacheImp" + e.message.toString())
-            false
-        }
-}
-    override fun evict(): Boolean {
-        return try {
-            stringDB.clearAllTables()
+    override fun countUsers(): Integer {
+        return newsDAO.countUsers()
+    }
 
-            true
-        } catch (e: Exception) {
-            Log.e("Error ", " DiskCacheImp" + e.message.toString())
-            false
-        }
+    override fun insertAll(newsEntity: NewsEntity) {
+        return newsDAO.insertAll(newsEntity)
+    }
+
+    override fun delete(user: NewsEntity) {
+        return newsDAO.delete(user)
+    }
+
+    override fun nukeTable() {
+        return newsDAO.nukeTable()
     }
 }

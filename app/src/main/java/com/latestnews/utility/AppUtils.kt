@@ -15,7 +15,7 @@ object AppUtils {
         val date2 = format.parse(time2)
         val mills = date1.time - date2.time
         val hours = (mills / (1000 * 60 * 60)).toInt()
-        val mins = (mills / (1000 * 60) % 60).toInt()
+        val mints = (mills / (1000 * 60) % 60).toInt()
         return Math.abs(hours)
     }
 

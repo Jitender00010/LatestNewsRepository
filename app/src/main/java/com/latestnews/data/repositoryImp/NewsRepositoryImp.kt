@@ -1,18 +1,19 @@
 package com.latestnews.data.repositoryImp
 
 import android.annotation.SuppressLint
+import android.util.Log
 import com.domain.entity.ListNewsResponse
 import com.domain.entity.NewsResponseVo
 
-import com.domain.enum.AppStateKey
 import com.domain.repository.NewsRepository
-import com.google.gson.Gson
+import com.latestnews.api.ApiConstant.API_KEY
+import com.latestnews.api.ApiConstant.COUNTRY
 
 import com.latestnews.api.api.NewsAPI
 import com.latestnews.base.BaseMapFunction
 import com.latestnews.data.roomdb.DiskCache
+import com.latestnews.data.roomdb.entity.NewsEntity
 import com.latestnews.utility.AppUtils
-import com.latestnews.utility.Failure
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
@@ -20,84 +21,125 @@ import javax.inject.Inject
 class NewsRepositoryImp @Inject constructor(private val newsAPI: NewsAPI,private val diskCache: DiskCache) : NewsRepository{
 
     @SuppressLint("CheckResult")
-    override fun getNewsList(): Observable<ListNewsResponse> {
+    override fun getNewsList(pageNo : Int): Observable<ListNewsResponse> {
+        return getTimeFromDB().flatMap { newsList ->
 
-        return checkNewsData().flatMap { isValid ->
-            if (isValid){
-              return@flatMap  getNewsDataFromDisk()
-            }else{
-                return@flatMap newsAPI.getNews("us","bab70fdc508a46aeb197ced873ade2b5").map (object : BaseMapFunction<List<NewsResponseVo>, ListNewsResponse>(ListNewsResponse()){})
-                    .flatMap { saveNewsDataFromDisk(it) }
-            }
-        }
-    }
-
-    @SuppressLint("CheckResult")
-    private fun saveNewsDataFromDisk(listNewsRes : ListNewsResponse) : Observable<ListNewsResponse> =
-        Observable.create {
-            diskCache.put(AppStateKey.NEWS_DATA.name, listNewsRes)
-            it.onNext(listNewsRes)
-            it.onComplete()
-    }
-
-    private fun getNewsDataFromDisk() : Observable<ListNewsResponse> {
-
-     return Observable.create {
-            val appConfigResponse = diskCache.get(AppStateKey.NEWS_DATA.name)
-            appConfigResponse?.let { its ->
-                val menuFromServer = Gson().fromJson(appConfigResponse, ListNewsResponse::class.java)
-                it.onNext(menuFromServer)
-            }
-            it.onComplete()
-        }
-    }
-
-    private fun checkNewsData() : Observable<Boolean> =
-        Observable.create {
-            val newsResponse = diskCache.get(AppStateKey.NEWS_DATA.name)
-            val timeResponse  = diskCache.get(AppStateKey.LAST_TIME.name)
-
-            val lastTime = Gson().fromJson(timeResponse, String::class.java)
-
-            if (lastTime == null && newsResponse == null ){
-                it.onNext(false)
-                saveTime(AppUtils.getCurrentTime())
+            if (newsList.isNotEmpty() && AppUtils.timeDifference(  // check 2 hours time and then data delete into db
+                    AppUtils.getCurrentTime(),
+                    newsList[0].time
+                ) >= 2
+            ) {
                 deleteNewsDiskdata()
-            }
-            else if (newsResponse == null){
-                it.onNext(false)
-            }
-            else{
-                if (AppUtils.timeDifference(lastTime,AppUtils.getCurrentTime()) >=2 ) {
-                    it.onNext(false)
-                    saveTime(AppUtils.getCurrentTime())
-                    deleteNewsDiskdata()
-
-                }else{
-                    it.onNext(true)
+                newsAPI.getNews(COUNTRY, 10, pageNo, API_KEY)
+                    .map(object : BaseMapFunction<ArrayList<NewsResponseVo>, ListNewsResponse>(
+                        ListNewsResponse()
+                    ) {})
+                    .flatMap {
+                        saveNewsDataFromDisk(it, pageNo)
+                        return@flatMap makeList(it)
+                    }
+            } else {
+                checkPageNumberIntoDB(pageNo).flatMap { dbResponse ->
+                    if (dbResponse.isNotEmpty()) {
+                        return@flatMap getListNewsFromDB(dbResponse)
+                    } else {
+                        newsAPI.getNews(COUNTRY, 10, pageNo, API_KEY)
+                            .map(object :
+                                BaseMapFunction<ArrayList<NewsResponseVo>, ListNewsResponse>(
+                                    ListNewsResponse()
+                                ) {})
+                            .flatMap {
+                                saveNewsDataFromDisk(it, pageNo)
+                                return@flatMap makeList(it)
+                            }
+                    }
                 }
             }
+        }
+    }
+
+    private fun makeList(its: ListNewsResponse): Observable<ListNewsResponse> =
+        Observable.create<ListNewsResponse>{
+            it.onNext(its)
             it.onComplete()
         }
 
 
+    fun getListNewsFromDB(dbResponse: List<NewsEntity>): Observable<ListNewsResponse>{
+        var list = ArrayList<NewsResponseVo>()
+        for (dbData in dbResponse){
+            var newsResponseVo = NewsResponseVo()
+            var source = newsResponseVo.Source()
+            source.name = dbData.source
+            newsResponseVo.source = source
+            newsResponseVo.author = dbData.author
+            newsResponseVo.title = dbData.title
+            newsResponseVo.description = dbData.description
+            newsResponseVo.url = dbData.url
+            newsResponseVo.urlToImage = dbData.urlToImage
+            newsResponseVo.publishedAt = dbData.publishedAt
+            newsResponseVo.content = dbData.content
+            list.add(newsResponseVo)
+        }
+
+        var listNewsResponse = ListNewsResponse()
+        listNewsResponse.articlesList = list
+
+        return Observable.create<ListNewsResponse> { emitter ->
+            emitter.onNext(listNewsResponse)
+            emitter.onComplete()
+        }
+    }
+
+    fun checkPageNumberIntoDB(pageNo: Int) : Observable<List<NewsEntity>> {
+
+       return Observable.create<List<NewsEntity>> {emitter ->
+           emitter.onNext(diskCache.getCurrentPage(pageNo))
+           emitter.onComplete()
+       }
+    }
+
+    fun getTimeFromDB() : Observable<List<NewsEntity>> {
+       return Observable.create<List<NewsEntity>> {emitter ->
+           emitter.onNext(diskCache.getAll())
+           emitter.onComplete()
+       }
+    }
+
     @SuppressLint("CheckResult")
-    private fun saveTime(time : String) {
-            Observable.create<Any> { emitter ->
-                diskCache.put(AppStateKey.LAST_TIME.name, time)
-                emitter.onComplete()
+    private fun saveNewsDataFromDisk(
+        listNewsRes: ListNewsResponse,
+        pageNo: Int
+    )  {
+        Observable.create<ListNewsResponse> {
+            for (listRes in listNewsRes.articlesList) {
+                val newsEntity = NewsEntity()
+                newsEntity.source = listRes.source.name
+                newsEntity.author = listRes.author
+                newsEntity.title = listRes.title
+                newsEntity.description = listRes.description
+                newsEntity.url = listRes.url
+                newsEntity.urlToImage = listRes.urlToImage
+                newsEntity.publishedAt = listRes.publishedAt
+                newsEntity.content = listRes.content
+                newsEntity.time = AppUtils.getCurrentTime()
+                newsEntity.pageNumber = pageNo
+
+                diskCache.insertAll(newsEntity)
             }
-                .subscribeOn(Schedulers.io())
-                .subscribe { }
+            it.onComplete()
+        }.subscribeOn(Schedulers.io())
+            .subscribe { }
     }
 
     @SuppressLint("CheckResult")
     private fun deleteNewsDiskdata() {
-            Observable.create<Boolean> { emitter ->
-                diskCache.remove<Boolean>(AppStateKey.NEWS_DATA.name)
-                emitter.onComplete()
-            }
-                .subscribeOn(Schedulers.io())
-                .subscribe { }
+        Observable.create<Boolean> { emitter ->
+
+            diskCache.nukeTable()
+            emitter.onComplete()
+        }
+            .subscribeOn(Schedulers.io())
+            .subscribe { }
     }
 }

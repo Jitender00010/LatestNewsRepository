@@ -7,8 +7,8 @@ import javax.inject.Inject
 
 class NewsRepositoryUseCase @Inject constructor(val newsRepository: NewsRepository) {
 
-    fun getNewsList() : Observable<ListNewsResponse>
+    fun getNewsList(page : Int) : Observable<ListNewsResponse>
     {
-        return newsRepository.getNewsList()
+        return newsRepository.getNewsList(page)
     }
 }
