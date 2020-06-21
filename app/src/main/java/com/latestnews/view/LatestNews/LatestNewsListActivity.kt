@@ -9,6 +9,7 @@ import com.latestnews.base.BaseViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 import android.content.Intent
+import android.view.View
 import com.latestnews.utility.PaginationListener
 import com.latestnews.utility.PaginationListener.PAGE_START
 import com.latestnews.view.NewsDetailsActivity
@@ -61,12 +62,16 @@ class LatestNewsListActivity : BaseActivity() {
                 adapter.removeLoading()
             mLastPage = true
             currentPage = PAGE_START
+
+            if (adapter.getListSize() == 0)
+                tv_placeholder.visibility = View.VISIBLE
         })
     }
 
 
     private fun fetchLatestNews(pageNo: Int, isScroll : Boolean) {
         newsViewModel.getLatestNews(pageNo).observe(this, Observer { response->
+            tv_placeholder.visibility = View.GONE
 
             if (response.articlesList.isNotEmpty()){
                 if (pageNo != PAGE_START || adapter.isLoading())
@@ -84,6 +89,9 @@ class LatestNewsListActivity : BaseActivity() {
                     adapter.removeLoading()
                 mLastPage = true
                 currentPage = PAGE_START
+
+                if (adapter.getListSize() == 0)
+                    tv_placeholder.visibility = View.VISIBLE
             }
         })
     }

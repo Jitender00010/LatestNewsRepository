@@ -1,7 +1,6 @@
 package com.latestnews.data.repositoryImp
 
 import android.annotation.SuppressLint
-import android.util.Log
 import com.domain.entity.ListNewsResponse
 import com.domain.entity.NewsResponseVo
 
@@ -30,27 +29,27 @@ class NewsRepositoryImp @Inject constructor(private val newsAPI: NewsAPI,private
                 ) >= 2
             ) {
                 deleteNewsDiskdata()
-                newsAPI.getNews(COUNTRY, 10, pageNo, API_KEY)
+                newsAPI.getNews(COUNTRY, 10, pageNo, API_KEY) // get data from server
                     .map(object : BaseMapFunction<ArrayList<NewsResponseVo>, ListNewsResponse>(
                         ListNewsResponse()
                     ) {})
                     .flatMap {
-                        saveNewsDataFromDisk(it, pageNo)
-                        return@flatMap makeList(it)
+                        saveNewsDataIntoDB(it, pageNo)             //save data into db
+                        return@flatMap getNewsList(it)
                     }
             } else {
                 checkPageNumberIntoDB(pageNo).flatMap { dbResponse ->
                     if (dbResponse.isNotEmpty()) {
-                        return@flatMap getListNewsFromDB(dbResponse)
+                        return@flatMap getNewsListFromDB(dbResponse)
                     } else {
-                        newsAPI.getNews(COUNTRY, 10, pageNo, API_KEY)
+                        newsAPI.getNews(COUNTRY, 10, pageNo, API_KEY)  // get data from server
                             .map(object :
                                 BaseMapFunction<ArrayList<NewsResponseVo>, ListNewsResponse>(
                                     ListNewsResponse()
                                 ) {})
                             .flatMap {
-                                saveNewsDataFromDisk(it, pageNo)
-                                return@flatMap makeList(it)
+                                saveNewsDataIntoDB(it, pageNo)      //save data into db
+                                return@flatMap getNewsList(it)
                             }
                     }
                 }
@@ -58,14 +57,14 @@ class NewsRepositoryImp @Inject constructor(private val newsAPI: NewsAPI,private
         }
     }
 
-    private fun makeList(its: ListNewsResponse): Observable<ListNewsResponse> =
+    private fun getNewsList(its: ListNewsResponse): Observable<ListNewsResponse> =
         Observable.create<ListNewsResponse>{
             it.onNext(its)
             it.onComplete()
         }
 
 
-    fun getListNewsFromDB(dbResponse: List<NewsEntity>): Observable<ListNewsResponse>{
+    fun getNewsListFromDB(dbResponse: List<NewsEntity>): Observable<ListNewsResponse>{
         var list = ArrayList<NewsResponseVo>()
         for (dbData in dbResponse){
             var newsResponseVo = NewsResponseVo()
@@ -107,7 +106,7 @@ class NewsRepositoryImp @Inject constructor(private val newsAPI: NewsAPI,private
     }
 
     @SuppressLint("CheckResult")
-    private fun saveNewsDataFromDisk(
+    private fun saveNewsDataIntoDB(
         listNewsRes: ListNewsResponse,
         pageNo: Int
     )  {

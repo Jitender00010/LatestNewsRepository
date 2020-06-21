@@ -75,6 +75,10 @@ class NewsAdapter constructor(private var list : ArrayList<NewsResponseVo>,priva
         notifyDataSetChanged()
     }
 
+    fun getListSize() : Int {
+        return list.size?:0
+    }
+
     private fun getItem(position: Int): NewsResponseVo? {
         return if (position > 0)
             list!![position]

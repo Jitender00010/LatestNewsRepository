@@ -16,4 +16,17 @@
         android:id="@+id/recyclerView"
        />
 
+    <TextView
+        android:id="@+id/tv_placeholder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="No Data fount"
+        android:textSize="14sp"
+        android:visibility="visible"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
