@@ -22,5 +22,6 @@ class LatestNewsApplication : DaggerApplication() {
         super.onCreate()
         // appComponent.inject(this)
 
+
     }
 }

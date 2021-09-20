@@ -9,8 +9,8 @@ import javax.inject.Inject
 
 open class BaseViewModel @Inject constructor() : ViewModel() {
 
-    var viewStatus: MutableLiveData<ViewStatus> = MutableLiveData()
-    var compositeDisposable = CompositeDisposable()
+    val viewStatus: MutableLiveData<ViewStatus> = MutableLiveData()
+    val compositeDisposable = CompositeDisposable()
 
 
     protected fun handleError(e: Failure){
